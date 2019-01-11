@@ -77,6 +77,7 @@ functions:
         Fn::GetAtt:
           - restaurantsTable
           - Arn
+    timeout: 10
   this-might-break:
     handler: index.handler
     description:
@@ -91,6 +92,7 @@ functions:
         Fn::GetAtt:
           - restaurantsTable
           - Arn
+    timeout: 10
 resources:
   Resources:
     restaurantsTable:
