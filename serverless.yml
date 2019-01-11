@@ -3,6 +3,7 @@ app: big-mouth-dev
 tenant: nuatu
 plugins:
   - serverless-pseudo-parameters
+  - serverless-cf-vars
 provider:
   name: aws
   runtime: nodejs6.10
@@ -76,6 +77,20 @@ functions:
         Fn::GetAtt:
           - restaurantsTable
           - Arn
+  this-might-break:
+    handler: index.handler
+    description:
+      Fn::Sub:
+        - 'Stack #{StackTagName} Environment #{EnvironmentTagName} Function #{ResourceName}'
+        - ResourceName: this-might-break
+    runtime: nodejs8.10
+    environment:
+      TABLE_NAME:
+        Ref: restaurantsTable
+      TABLE_ARN:
+        Fn::GetAtt:
+          - restaurantsTable
+          - Arn
 resources:
   Resources:
     restaurantsTable:
@@ -93,3 +108,12 @@ resources:
           WriteCapacityUnits: 1
       Metadata:
         StackeryName: restaurantsTable
+  Parameters:
+    StackTagName:
+      Type: String
+      Description: Stack Name (injected by Stackery at deployment time)
+      Default: big-mouth
+    EnvironmentTagName:
+      Type: String
+      Description: Environment Name (injected by Stackery at deployment time)
+      Default: dev
