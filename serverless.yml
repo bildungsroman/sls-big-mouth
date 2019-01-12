@@ -46,6 +46,7 @@ functions:
         Fn::GetAtt:
           - restaurantsTable
           - Arn
+    timeout: 10
   get-restaurants:
     handler: functions/get-restaurants.handler
     events:
