@@ -6,7 +6,7 @@ plugins:
   - serverless-cf-vars
 provider:
   name: aws
-  runtime: nodejs6.10
+  runtime: nodejs12.x
   stage: dev
   iamRoleStatements:
     - Effect: Allow
@@ -85,7 +85,6 @@ functions:
       Fn::Sub:
         - 'Stack #{StackTagName} Environment #{EnvironmentTagName} Function #{ResourceName}'
         - ResourceName: this-might-break
-    runtime: nodejs8.10
     environment:
       TABLE_NAME:
         Ref: restaurantsTable
